@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .app{
+    width: 100vi;
+    height: 100vh;
+    background:url(ls.jpg);
+    object-fit: contain;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loginContainer{
+text-align: center;
+
+width: 350px;
+height: 300px;
+border-radius: 10%;
+display: flex;
+flex-direction: column;
+align-items: center;
+background:rgba(230, 239, 246, 0.792);
+
+  }
+.title{
+    text-align: center;
+    margin-top: 29px;
+font-size: 20px;
+color: #1c6f86;
+
+}
+::placeholder {
+  color: rgb(34, 97, 122);
+  opacity: 1; /* Firefox */
+}
+  .inp{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  #name,#email,#password{
+    border: none;
+    outline: none;
+background:transparent;
+    width: 80%;
+    font-size: medium;
+    font-style: bold;
+    margin-top: 20px;
+    border-bottom: 1px solid rgb(30, 89, 126);
+  }
+  .button{
+    margin-top: 40px;
+    width: 45px;
+    height: 27px;
+    font-size: 15px;
+    border: none;
+    border-radius: 15%;
+    background-color: rgb(97, 236, 234);
+    color: rgb(32, 88, 129);
+    cursor: pointer;
+  }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+    <div class="app">
+
+        <div class="loginContainer">
+            <div class="title">Register</div>
+            <div class="inp">
+            <input type="text" placeholder="Name" id="name">
+            <input type="password" placeholder="Password" id="password">
+            <input type="email" placeholder="Email Address" id="email">
+            </div>
+            <div style="color: red;display: none;margin-top: 10px;" id="show">Fill all fields</div>
+
+            <button class="button" onclick="Register()">Go</button>
+        </div>
+
+
+    </div>
+
+    <script>
+        function Register() {
+
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            if(name!=="" && email!=="" && password!=="" ){
+                document.getElementById("show").style.display="block";
+                var xhttp=new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState==4 && this.status==200){
+                        console.log("success");
+                        window.location.href="/weather.html";
+                    }
+                    else if(this.readyState==4 && this.status!==200){
+                        console.log("error")
+                    }
+                    document.getElementById("show").style.display="none";
+                }
+                xhttp.open("post","http://localhost:8080/weather/Register",true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                
+                // Send the data to the servlet
+                var data = "name=" + name + "&password=" + password + "&email=" + email;
+                xhttp.send(data);
+            }
+            else{
+                document.getElementById("show").style.display="block";
+            }
+        };
+
+    </script>
+</body>
+</html>

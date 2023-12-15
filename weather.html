@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="weather.css">
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+        <title>Document</title>
+        <script>
+
+            window.addEventListener("load", (event) => {
+                var d = window
+                    .localStorage
+                    .getItem('name');
+                    var e = window
+                    .localStorage
+                    .getItem('city');
+                    // if(e==null){document.getElementById('view').classList.add("dnone")}else{document.getElementById('view').classList.remove("dnone")}
+                console.log(d);
+                document
+                    .getElementById('result')
+                    .innerHTML = "Welcome " + d + " !";
+                var len=localStorage.getItem("cities")
+                console.log(len)
+                if(len!==null){
+                    console.log("insidee")
+                    createFields();
+                }
+                function createFields() {
+                    var valuesArray = localStorage.getItem('cities');
+                    var valuesArray = JSON.parse(valuesArray);
+                    var container = document.getElementById('con');
+
+                    for (var i = 0; i < valuesArray.length; i++) {
+                        if (valuesArray[i].length > 1) {
+                            (function (index) {
+                                var input = document.createElement('p');
+                                input.textContent = valuesArray[index];
+                                container.appendChild(input);
+
+                                input.addEventListener('click', () => {
+                                    document
+                                        .getElementById('city')
+                                        .value = valuesArray[index];
+                                    handleClick();
+                                });
+                            })(i);
+                        }
+                    }
+                }
+
+            });
+        </script>
+    </head>
+    <body>
+        <div class="app">
+            <a style="text-decoration: none;background-color: rgb(109, 166, 242);color: white;padding: 0;;height: 35px;width: 100px;margin-top: 16px;position: absolute;
+            
+            right: 120px;text-align: center;border-radius: 10%;padding: 5px;" href="test.html">View in Map</a>
+            <button class="logout" style="cursor: pointer;" onclick="logout()">Logout</button>
+            <div class="inside">
+
+                <div class="ImgContainer">
+                    <div class="Img">
+                        <img class='img1' src='weather.jpg'/>
+
+                        <div class="centered" style="display:flex;justify-content:space-evenly">
+                            <p id="temp" style="color:white;font-size:88px;margin-bottom:100px" ">21</p>
+                            <h1 style="color:white">&#176;</h1>
+                        </div>
+                        <div class="centrebelow">
+                            <p
+                                id="weather"
+                                style="color:gray;font-size:35px;font-weight:bold;font-style:italic">Cloudy</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="dataContainer">
+                    <div class="separate">
+                        <div class="in">
+                            <p
+                                id='result'
+                                style="font-size:18px;margin-top:19px;font-weight:bold;font-style:italic;margin-left:34px"></p>
+                            <p style="font-size:15px;margin-top:22px;font-style:italic;margin-left:34px">Check out today's weather information</p>
+                            <div class="savedlocations">
+                                <p
+                                    style="font-size: 15px;margin-top: 20px;margin-left: 34px;font-weight: bold; width: 120px;height: 25px;border-bottom: 1px solid gray;text-align: center;padding: 5px;color: rgb(18, 121, 173);border-radius: 4%  ;">Saved Locations</p>
+                                <span
+                                    onclick="handledelete()"
+                                    style="color: red;position:relative;left:-80px;top:11px;cursor: pointer;"
+                                    class="material-symbols-outlined">
+                                    delete
+                                </span>
+                            </div>
+
+                            <div id="con" class="content">
+                                <!-- <p>Chennai</p> <p>London</p> <p>Perth</p> -->
+                            </div>
+                        </div>
+                        <div class="search">
+                            <div class="together">
+                                <input
+                                    style="color: black;width: 40%;margin-left: 59px;"
+                                    type="text"
+                                    name="city"
+                                    id="city"
+                                    placeholder="City Name">
+                                <button class="check" id="submitLocation" onclick="handleClick()">Check</button>
+                                <button class="check" onclick="handlesave()">Save</button>
+                            </div>
+                            <div style="color: red;" id="show"></div>
+                            <p style="font-size: 25px; font-weight: bold;margin: 10px;">or</p>
+                            <div class="together" style="width: 250px;margin-left: 32px;">
+                                <div class="up">
+                                    <input
+                                        style="color: black;"
+                                        type="text"
+                                        name="latitude"
+                                        id="lat"
+                                        placeholder="Latitude">
+                                    <input
+                                        style="color: black;"
+                                        type="text"
+                                        name="longitude"
+                                        id="lon"
+                                        placeholder="Longitude">
+                                </div>
+
+                                <button id="submitLocation" class="check" onclick="handleClick1()">Check</button>
+                                <button class="check">Save</button>
+
+                            </div>
+                            <div style="color: red;" id="show1"></div>
+
+                        </div>
+                    </div>
+                    <div class="boxes" style="display: flex;gap: 1rem;margin-left: 25px;">
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Temperature</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span style="font-size: 30px;" class="material-symbols-outlined">
+                                    thermostat
+                                </span>
+                                <span id="temp1" style="font-size:35px;margin-left: 40px;color: white;">30&#176;</span>
+                            </div>
+                        </div>
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Wind Speed</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span style="font-size: 30px;" class="material-symbols-outlined">
+                                    speed
+                                </span>
+                                <span id="wind" style="font-size:35px;margin-left: 40px;color: white;">10</span>
+                                <span style="font-size: 14px;color: white;margin-left: 4px;">
+                                    Km/hr</span>
+                            </div>
+
+                        </div>
+
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Humidity</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span style="font-size: 30px;" class="material-symbols-outlined">
+                                    humidity_mid
+                                </span>
+                                <span id="humidity" style="font-size:35px;margin-left: 40px;color: white;">38</span>
+                                <span style="font-size:20px;margin-left: 5px;color: white;">%</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div
+                        class="boxes"
+                        style="display: flex;gap: 1rem;margin-left: 25px;margin-top: 60px;">
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Visibility</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span style="font-size: 30px;" class="material-symbols-outlined">
+                                    visibility
+                                </span>
+                                <span id="vis" style="font-size:35px;margin-left: 40px;color: white;">0.0</span>
+                                <span style="font-size: 14px;color: white;margin-left: 5px;">
+                                    m</span>
+                            </div>
+                        </div>
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Pressure</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span style="font-size: 30px;" class="material-symbols-outlined">
+                                    arrow_downward
+                                </span>
+                                <span id="pressure" style="font-size:35px;margin-left: 40px;color: white;">1010</span>
+                                <span style="font-size: 14px;color:white;margin-left: 5px;">
+                                    mb</span>
+                            </div>
+
+                        </div>
+
+                        <div
+                            style="height:100px;border-radius:6%;width:200px;background-color:#c2cddc;margin-left:34px;display: flex;flex-direction: column;justify-items: center;">
+                            <p
+                                style="font-size:15px;font-weight:bold;margin-left:17px;height:20px;margin-top:10px;color: white;">Feels Like</p>
+                            <div
+                                style="display: flex;flex-direction: row;align-items: center;justify-content: center;"
+                                class="icon">
+                                <span id="like" style="font-size: 30px;" class="material-symbols-outlined">
+                                    mode_cool
+                                </span>
+                                <span id="feels" style="font-size:35px;margin-left: 40px;color: white">10</span>
+                                <span style="font-size:30px;margin-left: 5px;color: white">&#176;</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <script>
+                // function handleContent(){
+                // document.getElementById("content").addEventListener("click",function(){
+                // console.log(document.getElementById("content").value)     }) }
+                function handledelete() {
+                    localStorage.removeItem('cities');
+                    var container = document.getElementById('con');
+                    container.innerHTML = "";
+                    container.appendChild(input);
+                }
+                function handlesave() {
+                    if(document.getElementById('city').value != "") {
+
+                        var valuesArray = localStorage.getItem('cities');
+                        // console.log("val",valuesArray)
+                        if (valuesArray == null) {
+                        var arr=[]
+                        arr.push(document.getElementById('city').value)
+                        localStorage.setItem('cities', JSON.stringify(arr))
+                        createField();
+                        function createField() {
+                            var container = document.getElementById('con');
+                            
+                            var input = document.createElement('p');
+                            input.textContent = document
+                                .getElementById('city')
+                                .value;
+                            input.addEventListener("click",function(){
+                                document
+                                        .getElementById('city')
+                                        .value = document.getElementById('city').value;
+                                    handleClick();
+                            })
+                            container.appendChild(input);
+                            // windows.location.reload();
+                        }
+
+                    } else {
+                       
+                        var valuesArray=localStorage.getItem('cities'); 
+                        var valuesArray = JSON.parse(valuesArray);
+                        if(!valuesArray.includes(document.getElementById('city').value)){
+
+                            valuesArray.push(document.getElementById('city').value);
+                            localStorage.setItem('cities', JSON.stringify(valuesArray))
+                        createField();
+                        function createField() {
+                            var container = document.getElementById('con');
+
+                            var input = document.createElement('p');
+                            input.textContent = document
+                            .getElementById('city')
+                            .value;
+                                input.addEventListener("click",function(){
+                                document
+                                        .getElementById('city')
+                                        .value = document.getElementById('city').value;
+                                        handleClick();
+                                    })
+                            container.appendChild(input);
+                            // windows.location.reload();
+                        }
+                    }
+                };
+                    
+                    // document.getElementById('city').value="";
+                }
+                
+            }
+                function logout() {
+                    window
+                        .localStorage
+                        .removeItem('name');
+                    window.location.href = "/login.html";
+                }
+                function handleClick() {
+                    var MYID = "3def4a4e89b84400c33b091b92ee9723";
+                    var my2 = "c0a909e8c3f6207e86d0be1bd4b78c56"
+
+                    var city = document
+                        .getElementById("city")
+                        .value;
+                    localStorage.setItem('city', document.getElementById("city").value);
+                    
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const res = JSON.parse(this.responseText)
+                            console.log(res)
+                            console.log(res.main.temp)
+                            localStorage.setItem('lon', res.coord.lon);
+                    localStorage.setItem('lat', res.coord.lat);
+                    localStorage.setItem('Wea', res.weather[0].main);
+                    
+                    localStorage.setItem('Hum', res.main.humidity);
+                            console.log(JSON.stringify(res))
+                            document
+                                .getElementById("show")
+                                .innerHTML = ""
+                            document
+                                .getElementById("weather")
+                                .innerHTML = (res.weather[0].main)
+                            document
+                                .getElementById("wind")
+                                .innerHTML = (res.wind.speed)
+                            var tem = Math.round(parseInt(res.main.temp) * 10) / 10
+                            console.log(tem)
+                            if (tem > 80) {
+
+                                var cel = tem - 273.15;
+                                var cel = Math.round(parseInt(cel) * 10) / 10;
+                                localStorage.setItem('Tem', cel);
+
+                                var cel2 = Math.round(parseInt(res.main.feels_like) * 10) / 10;
+                                console.log("cel: " + cel)
+                                document
+                                    .getElementById("temp")
+                                    .innerHTML = cel;
+                                document
+                                    .getElementById("temp1")
+                                    .innerHTML = cel + "&#176";
+
+                            } else {
+                                if (tem <= 10) {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "mode_cool"
+                                } else {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "sunny"
+                                }
+                                document
+                                    .getElementById("temp")
+                                    .innerHTML = Math.round(parseInt(res.main.temp) * 10) / 10
+                                document
+                                    .getElementById("temp1")
+                                    .innerHTML = res.main.temp + "&#176";
+                            }
+                            document
+                                .getElementById("pressure")
+                                .innerHTML = res.main.pressure;
+                            document
+                                .getElementById("humidity")
+                                .innerHTML = res.main.humidity;
+                            document
+                                .getElementById("vis")
+                                .innerHTML = res.visibility;
+                            if (cel2 > 80) {
+                                var cel2 = cel2 - 273.15;
+                                var cel2 = Math.round(parseInt(cel2) * 10) / 10;
+                                document
+                                    .getElementById("feels")
+                                    .innerHTML = cel2;
+                                if (cel2 <= 16) {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "mode_cool"
+                                } else {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "sunny"
+                                }
+                            } else {
+                                document
+                                    .getElementById("feels")
+                                    .innerHTML = cel2;
+                            }
+                            document
+                                .getElementById('city')
+                                .value = "";
+
+                        } else if (this.status == 404) {
+                            document
+                                .getElementById("show")
+                                .innerHTML = "Invalid city name";
+                            // document
+                            //     .getElementById('city')
+                            //     .value = "";
+                        }
+
+                    };
+                    xhttp.open(
+                        "GET",
+                        // `http://localhost:8080/weather/test?city=${encodeURIComponent(city)}`,
+                        "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + MYID,
+                        true
+                    );
+
+                    xhttp.send();
+
+                }
+                function handleClick1() {
+                    var MYID = "3def4a4e89b84400c33b091b92ee9723";
+                    var my2 = "c0a909e8c3f6207e86d0be1bd4b78c56"
+                    var lat = document
+                        .getElementById('lat')
+                        .value;
+                    var lon = document
+                        .getElementById('lat')
+                        .value;
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const res = JSON.parse(this.responseText)
+                            console.log(res)
+                            console.log(res.main.temp)
+                            console.log(JSON.stringify(res))
+                            document
+                                .getElementById("show")
+                                .innerHTML = ""
+                            document
+                                .getElementById("weather")
+                                .innerHTML = (res.weather[0].main)
+                            document
+                                .getElementById("wind")
+                                .innerHTML = (res.wind.speed)
+                            var tem = Math.round(parseInt(res.main.temp) * 10) / 10
+                            console.log(tem)
+                            if (tem > 80) {
+
+                                var cel = tem - 273.15;
+                                var cel = Math.round(parseInt(cel) * 10) / 10;
+                                var cel2 = Math.round(parseInt(res.main.feels_like) * 10) / 10;
+                                console.log("cel: " + cel)
+
+                                document
+                                    .getElementById("temp")
+                                    .innerHTML = cel;
+                                document
+                                    .getElementById("temp1")
+                                    .innerHTML = cel + "&#176";
+
+                            } else {
+                                if (tem <= 10) {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "mode_cool"
+                                } else {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "sunny"
+                                }
+                                document
+                                    .getElementById("temp")
+                                    .innerHTML = Math.round(parseInt(res.main.temp) * 10) / 10
+                                document
+                                    .getElementById("temp1")
+                                    .innerHTML = res.main.temp + "&#176";
+                            }
+                            document
+                                .getElementById("pressure")
+                                .innerHTML = res.main.pressure;
+                            document
+                                .getElementById("humidity")
+                                .innerHTML = res.main.humidity;
+                            document
+                                .getElementById("vis")
+                                .innerHTML = res.visibility;
+                            if (cel2 > 80) {
+                                var cel2 = cel2 - 273.15;
+                                var cel2 = Math.round(parseInt(cel2) * 10) / 10;
+                                document
+                                    .getElementById("feels")
+                                    .innerHTML = cel2;
+                                if (cel2 <= 16) {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "mode_cool"
+                                } else {
+                                    document
+                                        .getElementById("like")
+                                        .innerHTML = "sunny"
+                                }
+                            } else {
+                                document
+                                    .getElementById("feels")
+                                    .innerHTML = cel2;
+                            }
+
+                        } else if (this.status == 404) {
+                            document
+                                .getElementById("show")
+                                .innerHTML = "Invalid city name";
+                        }
+
+                    };
+
+                    xhttp.open(
+                        "GET",
+                        "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +
+                                "&appid=" + my2,
+                        true
+                    );
+                    xhttp.send();
+                }
+            </script>
+        </body>
+    </html>

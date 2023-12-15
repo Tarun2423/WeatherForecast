@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="app">
+
+        <div class="loginContainer">
+            <div class="title">Login</div>
+            <div class="inp">
+                <input type="text" placeholder="Name" id="name">
+            <input type="password" placeholder="Password" id="password">
+            <input type="email" placeholder="Email Address" id="email">
+            </div>
+            <div style="color: red;display:none;margin-top: 10px;" id="show1">Fill all fields</div>
+            <div style="color: red;display:none;margin-top: 10px;" id="show">Wrong Credentials</div>
+            <div class="buttons">
+                <button class="button" onclick="Login()">Go</button>
+            <button style="width: 70px;font-size: 14px; margin-left: 10px;" class="button" onclick="Register()">Register</button>
+            </div>
+            
+        </div>
+
+
+    </div>
+
+    <script>
+        function Register() {
+            window.location.href="/register.html"
+        }
+        function Login() {
+
+            var name = document.getElementById("name").value;
+            console.log(name)
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            if(name!=="" && email!=="" && password!=="" ){
+                document.getElementById("show").style.display="block";
+                var xhttp=new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if(this.readyState==4 && this.status==200){
+                       
+                        var resp=this.responseText.trim();
+                    if(resp=="error"){
+                        console.log("error")
+                        document.getElementById("show").style.display="block";
+                        // document.getElementById("show1").innerHTML="wrong credentials";
+                     
+                    }
+                    if(resp!="error") 
+                    {
+                        document.getElementById("show").style.display="none";
+                        window.location.href="/weather.html"
+                    }
+
+                    }
+                    else if(this.readyState==4 && this.status!==200){
+                        console.log("error")
+                    }
+                    document.getElementById("show1").style.display="none";
+                }
+                xhttp.open("post","http://localhost:8080/weather/Login",true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                
+                // Send the data to the servlet
+                var data = "name=" + name + "&password=" + password ;
+                xhttp.send(data);
+            }
+            else{
+                document.getElementById("show1").style.display="block";
+            }
+        
+        };
+
+    </script>
+</body>
+</html>

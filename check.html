@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var MYID = "3def4a4e89b84400c33b091b92ee9723";
+const city = 'chennai';
+
+// Replace 'YOUR_API_KEY' with your actual OpenWeatherMap API key
+// Replace 'YOUR_CITY_NAME' with the city for which you want to get the weather information
+
+const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${MYID}`;
+
+fetch(apiUrl)
+  .then(response => response.json())
+  .then(data => {
+    const temperatureKelvin = data.main.temp;
+    console.log(`Temperature in Kelvin: ${temperatureKelvin} K`);
+
+    // You can convert to Celsius or Fahrenheit using the conversion functions
+    const temperatureCelsius = kelvinToCelsius(temperatureKelvin);
+    const temperatureFahrenheit = kelvinToFahrenheit(temperatureKelvin);
+
+    console.log(`Temperature in Celsius: ${temperatureCelsius.toFixed(2)} °C`);
+    console.log(`Temperature in Fahrenheit: ${temperatureFahrenheit.toFixed(2)} °F`);
+  })
+  .catch(error => console.error('Error fetching weather data:', error));
+
+// Functions for conversion (as mentioned in the previous responses)
+function kelvinToCelsius(kelvin) {
+  return kelvin - 273.15;
+}
+
+function kelvinToFahrenheit(kelvin) {
+  return (kelvin - 273.15) * 9/5 + 32;
+}
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+      var user=window.localStorage.getItem('name');
+      console.log(user)
+      if(user!==null){
+        window.location.href="weather.html"
+      }
+
+    else {
+          window.location.href ='login.html'; 
+      }
+  </script>
+</head>
+<body>
+
+    <h1>Weather App</h1>
+    <h2>Choose Location</h2>
+    <span id="error"></span>
+    <input type="text" name="city" id="city" placeholder="City Name">
+    <button id="submitLocation" onclick="handleClick()">Find</button>
+    <div id="show"></div>
+
+<script>
+
+function handleClick(){
+    var MYID="3def4a4e89b84400c33b091b92ee9723";
+    var my2="c0a909e8c3f6207e86d0be1bd4b78c56"
+    var lat="51.5072";
+    var lon="0.1276";
+    var city=document.getElementById("city").value;
+    var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText)
+     document.getElementById("show").innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("GET",  "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric" + "&APPID="+MYID, true);
+
+
+//   xhttp.open("GET",  "https://api.openweathermap.org/data/2.5/weather?lat=51.5072&lon=0.1276&appid="+my2, true);
+  xhttp.send();
+
+}
+
+</script>
+
+</body>
+</html>
